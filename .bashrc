@@ -117,7 +117,6 @@ if ! shopt -oq posix; then
 fi
 
 
-
 alias mv='mv -i'
 
 alias rm='rm -i'
@@ -162,13 +161,20 @@ function unsetproxy() {
     unset http_proxy HTTPS_PROXY FTP_PROXY
 }
 
+# 海思3531/3520交叉编译环境
+export PATH=$PATH:/Software/opt/aarch64-himix200-linux/bin/:/Software/opt/arm-linux/bin/
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Rust env
 source "$HOME/.cargo/env"
 
+# tmux env
 export TMUX_PLUGIN_MANAGER_PATH='~/.tmux/plugins'
 
+# QT env
 export QT_SCALE_FACTOR=1
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
 export QT_SCREEN_SCALE_FACTORS=2
 
+# Git env
 export GIT_SSL_NO_VERIFY=1
