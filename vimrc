@@ -27,6 +27,14 @@ Plugin 'gdbmgr'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Yggdroot/indentLine' " Indentation level"
 Plugin 'bling/vim-bufferline' " Buffer line"
+" Add maktaba and codefmt to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plugin 'google/vim-maktaba'
+Plugin 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage.
+Plugin 'google/vim-glaive'
+ 
 "Plugin 'kepbod/quick-scope' " Quick scope"
 
 " All of your Plugins must be added before the following line
@@ -38,7 +46,7 @@ let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 
 set guifont=Monospace\ 14
 
- set nu!             " 显示行号
+set nu!             " 显示行号
 
 syntax enable
 syntax on
