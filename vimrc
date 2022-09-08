@@ -1,32 +1,48 @@
 " Vundle manage
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-" sudo apt install clang-format
-
-" ctrlp.vim
-" mkdir -p ~/.vim/pack/plugins/start
-" git clone --depth=1 https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/pack/plugins/start/ctrlp
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
+" 代码提纲
 Plugin 'majutsushi/tagbar' " Tag bar"
+" 树形结构的文件管理器
+Plugin 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" NERD Tree 显示 git
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+" NERD Tree 文件名称颜色
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'jistr/vim-nerdtree-tabs'
+
+" 彩虹括号
+Plugin 'frazrepo/vim-rainbow'
+" 智能添加/删除括号
+Plugin 'jiangmiao/auto-pairs'
+" 自动补全单引号，双引号等
+Plugin 'Raimondi/delimitMate'
+" 可视化显示缩放级别
+Plugin 'nathanaelkane/vim-indent-guides'
+" 对齐代码的虚线，写Python尤其需要
+Plugin 'Yggdroot/indentLine' " Indentation level"
+" 用不同颜色高亮单词或选中块
+Plugin 'Yggdroot/vim-mark'
+" 注释 <leader>ci " toggle comment
+Plugin 'preservim/nerdcommenter'
+" 快速注释，比 nerdcommenter 简洁 gcc-注释反注释 gcap-注释一段 gc-可视模式注释选中部分
+Plugin 'tpope/vim-commentary'
+
 Plugin 'scrooloose/syntastic'
 Plugin 'vim-airline/vim-airline' | Plugin 'vim-airline/vim-airline-themes' " Status line"
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'mbbill/undotree'
 Plugin 'gdbmgr'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Yggdroot/indentLine' " Indentation level"
 Plugin 'bling/vim-bufferline' " Buffer line"
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -35,20 +51,18 @@ Plugin 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
 Plugin 'google/vim-glaive'
- 
+
 "Plugin 'kepbod/quick-scope' " Quick scope"
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-let g:ycm_server_python_interpreter='/usr/bin/python'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
-
 set guifont=Monospace\ 14
-
 set nu!             " 显示行号
-
+set encoding=UTF-8
 syntax enable
 syntax on
 colorscheme desert
@@ -57,8 +71,25 @@ colorscheme desert
 
 set foldmethod=syntax
 set foldlevel=100  " 启动vim时不要自动折叠代码
+
+"<leader>='
+let mapleader = ","
+
+"enable it globally
+let g:rainbow_active = 1
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+
 "  折行
-"autocmd FileType c,cpp  setl fdm=syntax | setl fen
+autocmd FileType c,cpp,cc  setl fdm=syntax | setl fen
 
  "--------------------------------------------------------------------------------
  " TagList :Tlist 和 wm
@@ -71,16 +102,25 @@ set foldlevel=100  " 启动vim时不要自动折叠代码
 
 " Tagbar
 "nmap tag :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
 let g:tagbar_width=25
 autocmd BufReadPost *.cpp,*.c,*.h,*.cc,*.cxx call tagbar#autoopen()
 
 " NetRedTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 let NERDTreeWinSize=15
 let NERDTreeShowLineNumbers=1
 "let NERDTreeAutoCenter=1
 let NERDTreeShowBookmarks=1
+nnoremap <leader>nf :NERDTreeFocus<CR>
+nnoremap <leader><C-n> :NERDTree<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader><C-f> :NERDTreeFind<CR>
 
 let g:winManagerWindowLayout='TagList'
 nmap wm :WMToggle<cr>
@@ -152,7 +192,7 @@ if filereadable("GTAGS")
 	set cscopetag
 	set cscopeprg=gtags-cscope
 	cs add GTAGS
-	au BufWritePost *.c,*.cpp,*.h silent! !global -u &
+	au BufWritePost *.c,*.cc,*.cpp,*.h silent! !global -u &
 endif
 
 
@@ -176,7 +216,11 @@ let g:miniBufExplMapWindowNavArrows = 1
 nnoremap <silent> <F12> :A<CR>
 
 
+
 " ctrlp.vim
+" mkdir -p ~/.vim/pack/plugins/start
+" git clone --depth=1 https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/pack/plugins/start/ctrlp
+
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
