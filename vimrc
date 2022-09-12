@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" run git submodule update --init --recursive
 Plugin 'Valloric/YouCompleteMe'
 " 代码提纲
 Plugin 'majutsushi/tagbar' " Tag bar"
