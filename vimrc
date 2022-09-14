@@ -11,7 +11,9 @@ call vundle#begin()
 " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 Plugin 'VundleVim/Vundle.vim'
 
+" 屏幕的底部放一个栏，告诉你在处理什么文件
 Plugin 'itchyny/lightline.vim'
+" 模糊搜索神器
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " git submodule update --init --recursive
@@ -27,7 +29,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'jistr/vim-nerdtree-tabs'
 
-" 彩虹括号
+" 给每一对括号加一个独特的颜色
 Plugin 'frazrepo/vim-rainbow'
 " 智能添加/删除括号
 Plugin 'jiangmiao/auto-pairs'
@@ -40,7 +42,7 @@ Plugin 'Yggdroot/indentLine' " Indentation level"
 " 用不同颜色高亮单词或选中块
 Plugin 'Yggdroot/vim-mark'
 " 注释 <leader>ci " toggle comment
-Plugin 'preservim/nerdcommenter'
+" Plugin 'preservim/nerdcommenter'
 " 快速注释，比 nerdcommenter 简洁 gcc-注释反注释 gcap-注释一段 gc-可视模式注释选中部分
 Plugin 'tpope/vim-commentary'
 
