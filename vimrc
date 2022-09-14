@@ -8,11 +8,15 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 call vundle#begin()
 
 " let Vundle manage Vundle, required
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'itchyny/lightline.vim'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" run git submodule update --init --recursive
+
+" git submodule update --init --recursive
 Plugin 'Valloric/YouCompleteMe'
+
 " 代码提纲
 Plugin 'majutsushi/tagbar' " Tag bar"
 " 树形结构的文件管理器
