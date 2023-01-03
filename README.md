@@ -1,7 +1,7 @@
 # dotfiles
 dotfiles for dh
 
-#lunarvim 
+# lunarvim 
 ## 搜索字符串
 ### 快捷键
 \<leader\>st
